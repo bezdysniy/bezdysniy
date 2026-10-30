@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Моя будущая профессия</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="bg-blobs">
+    <span class="blob blob-1"></span>
+    <span class="blob blob-2"></span>
+    <span class="blob blob-3"></span>
+  </div>
+
+    <header class="glass header">
+    <div class="logo"><span class="logo-icon">🎓</span> Моя будущая профессия</div>
+    <nav class="menu">
+      <a href="#home" class="nav-link active">Главная</a>
+      <a href="#about" class="nav-link">О сайте</a>
+      <a href="#professions" class="nav-link">Профессии</a>
+      <a href="#contact" class="nav-link">Связь</a>
+    </nav>
+    <button id="themeToggle" class="theme-btn" title="Переключить тему">🌙</button>
+  </header>
+
+  <main>
+    <!-- Главная -->
+    <section id="home" class="section visible">
+      <h1 class="hero-title">Найди свою будущую профессию</h1>
+      <p class="hero-subtitle">
+        Этот сайт поможет определить ваши интересы, сильные стороны
+        и подходящее направление работы с помощью интерактивного профтеста.
+      </p>
+      <button class="btn btn-primary" id="startTestBtn">Начать тест</button>
+
+      <div class="cards-grid">
+        <div class="glass card direction-card" data-direction="it">
+          <div class="card-icon">💻</div>
+          <h3>IT</h3>
+          <p>Программирование, сайты, приложения и технологии будущего.</p>
+        </div>
+        <div class="glass card direction-card" data-direction="medicine">
+          <div class="card-icon">🩺</div>
+          <h3>Медицина</h3>
+          <p>Помощь людям, здоровье, биология и забота о пациентах.</p>
+        </div>
+        <div class="glass card direction-card" data-direction="analytics">
+          <div class="card-icon">📊</div>
+          <h3>Аналитика</h3>
+          <p>Работа с данными, цифрами, логикой и поиском закономерностей.</p>
+        </div>
+        <div class="glass card direction-card" data-direction="marketing">
+          <div class="card-icon">📣</div>
+          <h3>Маркетинг</h3>
+          <p>Творчество, общение, реклама и продвижение идей.</p>
+        </div>
+        <div class="glass card direction-card" data-direction="engineering">
+          <div class="card-icon">⚙️</div>
+          <h3>Инженерия</h3>
+          <p>Техника, механизмы, роботы и инженерные решения.</p>
+        </div>
+        <div class="glass card direction-card" data-direction="education">
+          <div class="card-icon">📚</div>
+          <h3>Образование</h3>
+          <p>Обучение, наставничество и работа с детьми и взрослыми.</p>
+        </div>
+        <div class="glass card direction-card" data-direction="law">
+          <div class="card-icon">⚖️</div>
+          <h3>Право</h3>
+          <p>Законы, защита прав и справедливость.</p>
+        </div>
+        <div class="glass card direction-card" data-direction="design">
+          <div class="card-icon">🎬</div>
+          <h3>Дизайн и медиа</h3>
+          <p>Графика, видео, контент и креативные проекты.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Тест (скрыт от меню, открывается кнопкой/профессией) -->
+    <section id="test" class="section">
+      <h2 class="section-title">Профтест</h2>
+
+      <!-- Стартовый экран -->
+      <div id="testStart" class="glass quiz-box">
+        <h3 class="question-text">Выберите тест</h3>
+        <p class="test-hint">
+          Общий тест определит ваш тип личности. Тест по направлению подскажет
+          конкретную профессию внутри выбранной сферы.
+        </p>
+
+        <div class="name-row">
+          <label for="userName">Ваше имя и фамилия (для грамоты):</label>
+          <input id="userName" type="text" placeholder="Например: Иван Петров" class="name-input" />
+        </div>
+
+        <div class="test-choices">
+          <button class="test-choice btn btn-outline" data-mode="general">Общий тест</button>
+          <button class="test-choice btn btn-outline" data-mode="it">IT</button>
+          <button class="test-choice btn btn-outline" data-mode="medicine">Медицина</button>
+          <button class="test-choice btn btn-outline" data-mode="analytics">Аналитика</button>
+          <button class="test-choice btn btn-outline" data-mode="marketing">Маркетинг</button>
+          <button class="test-choice btn btn-outline" data-mode="engineering">Инженерия</button>
+          <button class="test-choice btn btn-outline" data-mode="education">Образование</button>
+          <button class="test-choice btn btn-outline" data-mode="law">Право</button>
+          <button class="test-choice btn btn-outline" data-mode="design">Дизайн и медиа</button>
+        </div>
+      </div>
+
+      <!-- Вопросы -->
+      <div id="quizBox" class="glass quiz-box hidden">
+        <div class="progress-wrap">
+          <div class="progress-info">
+            <span id="qCounter">Вопрос 1 из 10</span>
+            <span id="qPercent">0%</span>
+          </div>
+          <div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
+        </div>
+        <h3 id="questionText" class="question-text">Загрузка…</h3>
+        <div id="answersBox" class="answers-grid"></div>
+      </div>
+
+      <!-- Результат -->
+      <div id="resultBox" class="glass result-box hidden">
+        <div class="result-icon" id="resultIcon">✨</div>
+        <h3 class="result-type" id="resultType">Тип</h3>
+        <p class="result-profession" id="resultProfession">Профессия</p>
+        <div class="result-percent-wrap">
+          <div class="progress-bar big"><div id="resultFill" class="progress-fill"></div></div>
+          <span id="resultPercent" class="result-percent">0%</span>
+        </div>
+        <div class="result-blocks">
+          <div class="glass mini-block"><h4>Вывод</h4><p id="resultConclusion"></p></div>
+          <div class="glass mini-block"><h4>Что развивать</h4><p id="resultDevelop"></p></div>
+          <div class="glass mini-block"><h4>Первые шаги</h4><p id="resultSteps"></p></div>
+        </div>
+        <div class="result-buttons">
+          <button id="shareBtn" class="btn btn-primary">Скачать грамоту PDF</button>
+          <button id="restartBtn" class="btn btn-outline">Пройти заново</button>
+          <button id="backToStartBtn" class="btn btn-outline">Выбрать другой тест</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Профессии -->
+    <section id="professions" class="section">
+      <h2 class="section-title">Профессии</h2>
+      <div class="filters">
+        <button class="filter-btn active" data-filter="all">Все</button>
+        <button class="filter-btn" data-filter="it">IT</button>
+        <button class="filter-btn" data-filter="medicine">Медицина</button>
+        <button class="filter-btn" data-filter="analytics">Аналитика</button>
+        <button class="filter-btn" data-filter="marketing">Маркетинг</button>
+        <button class="filter-btn" data-filter="engineering">Инженерия</button>
+        <button class="filter-btn" data-filter="education">Образование</button>
+        <button class="filter-btn" data-filter="law">Право</button>
+        <button class="filter-btn" data-filter="design">Дизайн и медиа</button>
+      </div>
+      <div class="cards-grid" id="professionsGrid"></div>
+    </section>
+
+    <!-- О сайте -->
+    <section id="about" class="section">
+      <h2 class="section-title">О сайте</h2>
+      <div class="glass about-box">
+        <p><strong>«Моя будущая профессия»</strong> — это школьный проект, созданный для помощи в выборе будущей профессии. Сайт помогает школьникам и всем, кто задумывается о своём пути, понять свои интересы, сильные стороны и подходящее направление работы.</p>
+
+        <h3>Зачем нужен этот сайт?</h3>
+        <p>Выбор профессии — важный шаг. Часто школьникам сложно понять, к чему у них есть склонности. Этот сайт предлагает пройти интерактивный профтест, который помогает увидеть свои интересы и получить рекомендации по профессиям.</p>
+
+        <h3>Как работает тест?</h3>
+        <p>На сайте два вида тестов:</p>
+        <p><strong>1. Общий тест</strong> — 10 вопросов. Определяет ведущий тип личности: аналитик, творец, коммуникатор или организатор. По результатам показывается подходящее направление и рекомендации.</p>
+        <p><strong>2. Тесты по направлениям</strong> — по 10 вопросов для каждого из 8 направлений: IT, медицина, аналитика, маркетинг, инженерия, образование, право, дизайн и медиа. По итогам тест определяет конкретную профессию внутри направления и показывает процент совпадения.</p>
+
+        <h3>Что вы получите по итогам?</h3>
+        <p>После прохождения теста вы увидите:</p>
+        <p>— подходящую профессию и процент совпадения;<br>
+        — вывод о ваших склонностях;<br>
+        — что стоит развивать;<br>
+        — первые шаги для изучения профессии.</p>
+        <p>Также можно скачать именную грамоту в PDF с результатами теста и поделиться ею.</p>
+
+        <h3>Раздел «Профессии»</h3>
+        <p>В разделе «Профессии» собрано 32 профессии по 8 направлениям. Можно отфильтровать профессии по направлению или кликнуть на любую карточку — и сразу запустится тест этого направления.</p>
+
+        <h3>Техническая информация</h3>
+        <p>Сайт работает на HTML, CSS и JavaScript без внешних платных сервисов. Поддерживает светлую и тёмную тему, полностью адаптирован под телефон, планшет и компьютер. Все результаты теста остаются в вашем браузере.</p>
+
+        <p><strong>Важно:</strong> тест не заменяет профессиональную консультацию, но помогает сделать первый шаг к осознанному выбору.</p>
+      </div>
+    </section>
+
+    <!-- Связь -->
+    <section id="contact" class="section">
+      <h2 class="section-title">Связь</h2>
+      <div class="glass about-box">
+        <p><strong>Есть вопросы, идеи или предложения по проекту?</strong> Напишите нам — мы открыты к обратной связи.</p>
+
+        <h3>Контакты</h3>
+        <p>📧 Email: <a href="mailto:ilataradojna025@gmail.com" style="color:#a78bfa; text-decoration:none;">ilataradojna025@gmail.com</a></p>
+        <p>💬 Telegram: <a href="https://t.me/bezdysniy" target="_blank" rel="noopener" style="color:#a78bfa; text-decoration:none;">@bezdysniy</a></p>
+        <p>🏫 Организация: <strong>Карасукский Педагогический колдеж, проект «Моя будущая профессия»</strong></p>
+        <h3>Авторы проекта</h3>
+        <p>Сайт создан в рамках  проекта. Руководитель: <strong>Екатерина Сергеевна</strong>. Участник: <strong>Тарадойна Илья</strong>.</p>
+        <p>© 2027 г. — Защита проекта КПК</p>
+      </div>
+    </section>
+  </main>
+  <footer class="glass footer">
+    <p>© 2027 г. — Защита проекта КПК</p>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
